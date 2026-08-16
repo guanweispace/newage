@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>謹慎自守 · 辨識風潮 —— 認識與防備新紀元運動</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#0E1226;
+  --void-deep:#080A18;
+  --void-card:#171C38;
+  --lamp:#E8B24D;
+  --lamp-soft:#F4D695;
+  --false-a:#8B7CF6;
+  --false-b:#34D6C9;
+  --paper:#FBF6EC;
+  --paper-dim:#F1E9D6;
+  --ink:#1C1B22;
+  --ink-soft:#5B5A6B;
+  --line:rgba(255,255,255,0.12);
+  --line-dark:rgba(28,27,34,0.12);
+  --radius:18px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Noto Sans TC', sans-serif;
+  background:var(--void-deep);
+  color:var(--paper);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::selection{background:var(--lamp); color:var(--ink);}
+h1,h2,h3,.serif{font-family:'Noto Serif TC', serif;}
+.mono{font-family:'Space Mono', monospace; letter-spacing:0.02em;}
+
+/* ---------- background ---------- */
+#stars{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse at 50% -10%, #1B2247 0%, var(--void) 45%, var(--void-deep) 100%);
+}
+.star{
+  position:absolute; border-radius:50%; background:#fff;
+  animation:twinkle var(--dur) ease-in-out infinite; opacity:var(--op);
+}
+@keyframes twinkle{
+  0%,100%{opacity:var(--op); transform:scale(1);}
+  50%{opacity:calc(var(--op) * 0.25); transform:scale(0.7);}
+}
+.lamp-burst{
+  position:fixed; z-index:0; pointer-events:none; border-radius:50%;
+  width:520px; height:520px; left:50%; top:38%; transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(232,178,77,0.16) 0%, rgba(232,178,77,0) 70%);
+  filter:blur(2px); opacity:0; transition:opacity 1.4s ease;
+}
+.lamp-burst.on{opacity:1;}
+
+#app{position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column;}
+
+/* ---------- home screen ---------- */
+.home{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:64px 24px;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--lamp-soft); border:1px solid rgba(232,178,77,0.4); padding:6px 14px; border-radius:999px; margin-bottom:28px;
+}
+.eyebrow::before{content:"✦"; color:var(--lamp);}
+.home h1{
+  font-size:clamp(32px,5.5vw,54px); font-weight:900; line-height:1.3; margin:0 0 18px;
+  background:linear-gradient(180deg,#fff 0%, var(--paper-dim) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.home h1 em{
+  font-style:normal; background:linear-gradient(90deg,var(--lamp-soft),var(--lamp));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.home p.sub{color:#B9BEDC; max-width:620px; font-size:16px; line-height:1.85; margin:0 0 40px;}
+.verse-box{
+  max-width:640px; margin:0 0 44px; padding:22px 26px; border-radius:var(--radius);
+  background:rgba(255,255,255,0.04); border:1px solid var(--line); text-align:left;
+}
+.verse-box p{margin:0; font-size:15px; line-height:1.9; color:var(--paper-dim);}
+.verse-box .ref{display:block; margin-top:10px; font-size:12.5px; color:var(--lamp-soft); font-family:'Space Mono',monospace;}
+
+.mode-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; width:100%; max-width:780px;}
+@media (max-width:640px){.mode-grid{grid-template-columns:1fr;}}
+.mode-card{
+  position:relative; text-align:left; border-radius:22px; padding:30px 26px 26px;
+  background:linear-gradient(160deg, var(--void-card), #10142A);
+  border:1px solid var(--line); cursor:pointer; transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  overflow:hidden;
+}
+.mode-card:hover{transform:translateY(-4px); border-color:rgba(232,178,77,0.55); box-shadow:0 24px 60px -20px rgba(232,178,77,0.25);}
+.mode-card .tag{font-family:'Space Mono',monospace; font-size:12px; color:var(--lamp-soft); letter-spacing:0.08em;}
+.mode-card h3{font-size:22px; margin:10px 0 10px; line-height:1.4;}
+.mode-card p{font-size:13.5px; color:#A9AECB; line-height:1.75; margin:0 0 20px;}
+.mode-card .go{
+  display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--void-deep);
+  background:var(--lamp-soft); padding:9px 16px; border-radius:999px;
+}
+.mode-card .deco{position:absolute; right:-30px; top:-30px; width:120px; height:120px; border-radius:50%;
+  background:radial-gradient(circle, rgba(139,124,246,0.35), transparent 70%);}
+
+/* ---------- deck screen ---------- */
+.deck{flex:1; display:none; flex-direction:column; min-height:100vh;}
+.deck.active{display:flex;}
+.deck-top{
+  position:sticky; top:0; z-index:5; backdrop-filter:blur(10px);
+  background:rgba(8,10,24,0.72); border-bottom:1px solid var(--line);
+}
+.deck-top-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 24px; max-width:880px; margin:0 auto;}
+.back-btn{
+  background:none; border:1px solid var(--line); color:var(--paper-dim); font-size:12.5px;
+  padding:7px 13px; border-radius:999px; cursor:pointer; font-family:'Noto Sans TC',sans-serif;
+}
+.back-btn:hover{border-color:var(--lamp-soft); color:var(--lamp-soft);}
+.timer-box{display:flex; align-items:center; gap:10px;}
+.timer-display{font-family:'Space Mono',monospace; font-size:18px; letter-spacing:0.05em; color:var(--lamp-soft);}
+.timer-btn{background:rgba(255,255,255,0.06); border:1px solid var(--line); color:var(--paper); width:30px; height:30px;
+  border-radius:50%; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center;}
+.timer-btn:hover{border-color:var(--lamp-soft);}
+.progress-track{height:3px; width:100%; background:rgba(255,255,255,0.08);}
+.progress-fill{height:100%; background:linear-gradient(90deg,var(--false-a),var(--lamp)); transition:width .4s ease;}
+
+.deck-body{flex:1; display:flex; align-items:flex-start; justify-content:center; padding:40px 24px 30px;}
+.slide{max-width:780px; width:100%; animation:fadeUp .5s ease;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+.slide-meta{display:flex; align-items:center; gap:12px; margin-bottom:18px; flex-wrap:wrap;}
+.chip{font-family:'Space Mono',monospace; font-size:11.5px; letter-spacing:0.06em; padding:5px 12px; border-radius:999px;}
+.chip.section{background:rgba(139,124,246,0.18); color:#C3BAFF; border:1px solid rgba(139,124,246,0.35);}
+.chip.time{background:rgba(232,178,77,0.14); color:var(--lamp-soft); border:1px solid rgba(232,178,77,0.35);}
+.slide h2{font-size:clamp(24px,4vw,32px); line-height:1.4; margin:0 0 22px; font-weight:700;}
+
+/* UI for Media Placeholder */
+.media-placeholder{
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  background:rgba(232,178,77,0.1); border:2px dashed var(--lamp-soft); color:var(--lamp-soft);
+  padding:20px; border-radius:var(--radius); margin-bottom:24px; font-weight:700; font-size:16px;
+  animation: pulseBg 2s infinite;
+}
+@keyframes pulseBg{
+  0%, 100%{background:rgba(232,178,77,0.05);}
+  50%{background:rgba(232,178,77,0.15);}
+}
+
+.grill-box{
+  background:linear-gradient(160deg, rgba(139,124,246,0.14), rgba(52,214,201,0.05));
+  border:1px solid rgba(139,124,246,0.35); border-radius:var(--radius);
+  padding:24px 26px; margin-bottom:20px;
+}
+.grill-label{display:flex; align-items:center; gap:8px; font-family:'Space Mono',monospace; font-size:12px;
+  letter-spacing:0.1em; text-transform:uppercase; color:#C3BAFF; margin-bottom:12px;}
+.grill-label::before{content:"🔥";}
+.grill-q{font-size:18px; line-height:1.75; font-weight:500; color:#fff;}
+.grill-hint{margin-top:10px; font-size:13px; color:#9EA3C4;}
+
+/* Role Play UI */
+.dialogue-box{
+  background:rgba(0,0,0,0.25); border:1px solid var(--line);
+  border-radius:var(--radius); padding:24px; margin-bottom:24px;
+}
+.msg{margin-bottom:20px;}
+.msg:last-child{margin-bottom:0;}
+.msg-name{
+  display:inline-block; font-weight:700; margin-bottom:8px; padding:4px 10px;
+  border-radius:6px; font-size:13px; letter-spacing:0.05em; font-family:'Space Mono', monospace;
+}
+.role-a .msg-name{background:rgba(139,124,246,0.2); color:#C3BAFF;}
+.role-b .msg-name{background:rgba(232,178,77,0.2); color:var(--lamp-soft);}
+.role-text{font-size:16px; line-height:1.8; color:#DCDFF2; padding-left:4px;}
+
+.reveal-btn{
+  display:inline-flex; align-items:center; gap:10px; margin-top:6px;
+  background:var(--lamp); color:var(--void-deep); border:none; font-weight:700; font-size:14.5px;
+  padding:13px 22px; border-radius:999px; cursor:pointer; transition:transform .2s ease, box-shadow .2s ease;
+  box-shadow:0 12px 30px -12px rgba(232,178,77,0.6);
+}
+.reveal-btn:hover{transform:translateY(-2px);}
+
+.reveal-panel{
+  margin-top:22px; border-radius:var(--radius); background:var(--paper); color:var(--ink);
+  padding:26px 28px; display:none; box-shadow:0 30px 70px -30px rgba(232,178,77,0.35);
+}
+.reveal-panel.shown{display:block; animation:fadeUp .5s ease;}
+.reveal-panel h4{margin:0 0 12px; font-size:15px; color:#8B6A1C; font-family:'Space Mono',monospace; letter-spacing:0.04em;}
+.reveal-panel p{font-size:15.5px; line-height:1.9; margin:0 0 14px; color:var(--ink);}
+.reveal-panel p:last-child{margin-bottom:0;}
+.reveal-panel ul{margin:0 0 14px; padding-left:20px;}
+.reveal-panel li{font-size:15px; line-height:1.85; margin-bottom:6px;}
+.verse-chip{
+  display:block; border-left:3px solid var(--lamp); background:var(--paper-dim); padding:12px 16px;
+  border-radius:8px; font-size:14.5px; line-height:1.8; margin:14px 0; color:#42351A;
+}
+.verse-chip b{font-family:'Space Mono',monospace; font-weight:700; color:#8B6A1C; font-size:12.5px; display:block; margin-bottom:4px;}
+.split{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px;}
+@media (max-width:600px){.split{grid-template-columns:1fr;}}
+.split .col{padding:16px 18px; border-radius:12px;}
+.split .col.lie{background:#F3E3E0;}
+.split .col.truth{background:#E6EFE3;}
+.split .col h5{margin:0 0 8px; font-size:13px; font-family:'Space Mono',monospace;}
+.split .col.lie h5{color:#9C4A3F;}
+.split .col.truth h5{color:#4B7A44;}
+.split .col p{font-size:14px; line-height:1.75; margin:0; color:var(--ink);}
+
+.nav-row{display:flex; align-items:center; justify-content:space-between; margin-top:30px; gap:12px;}
+.nav-btn{
+  flex:1; display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:14px 18px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,0.03);
+  color:var(--paper); font-size:14.5px; cursor:pointer; font-family:'Noto Sans TC',sans-serif; font-weight:500;
+  transition:border-color .2s ease, background .2s ease;
+}
+.nav-btn:hover{border-color:var(--lamp-soft); background:rgba(232,178,77,0.08);}
+.nav-btn.primary{background:var(--lamp); color:var(--void-deep); border-color:var(--lamp); font-weight:700;}
+.nav-btn.primary:hover{background:var(--lamp-soft);}
+.nav-btn:disabled{opacity:0.3; cursor:not-allowed;}
+
+.dots{display:flex; gap:6px; justify-content:center; margin:22px 0 6px; flex-wrap:wrap; max-width:760px; margin-left:auto; margin-right:auto;}
+.dot{width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.18); cursor:pointer; transition:all .2s ease;}
+.dot.active{background:var(--lamp); width:20px; border-radius:5px;}
+.dot.done{background:rgba(232,178,77,0.5);}
+
+.pray-box{
+  background:linear-gradient(160deg, rgba(232,178,77,0.14), rgba(139,124,246,0.08));
+  border:1px solid rgba(232,178,77,0.35); border-radius:var(--radius); padding:28px 26px; margin-top:16px;
+}
+.pray-box p{font-size:16px; line-height:2; color:#F1E9D6; margin:0;}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div class="lamp-burst" id="lampBurst"></div>
+
+<div id="app">
+
+  <!-- HOME -->
+  <div class="home" id="homeScreen">
+    <div class="eyebrow">真耶穌教會 國中高級班教材</div>
+    <h1>謹慎自守 · 辨識風潮<br><em>認識與防備新紀元運動</em></h1>
+    <p class="sub">魔鬼在末世的工作極其精緻，包裝成「心想事成」、「潛能開發」與「身心靈舒壓」。讓我們以聖經真理為依歸，為青少年築起堅固的信仰防線。</p>
+    <div class="verse-box">
+      <p>「你們的仇敵魔鬼，如同吼叫的獅子，遍地遊行，尋找可吞喫的人。你們要用堅固的信心抵擋他。」</p>
+      <span class="ref">彼得前書 五章8-9節</span>
+    </div>
+    <div class="mode-grid">
+      <div class="mode-card" data-deck="worship">
+        <div class="deco"></div>
+        <span class="tag">50 MIN · 崇拜聚會</span>
+        <h3>新紀元運動的<br>影響與防備</h3>
+        <p>剖析名詞由來、三大核心毒素、校園思潮滲透與聖經真理對照。</p>
+        <span class="go">開始崇拜聚會 →</span>
+      </div>
+      <div class="mode-card" data-deck="activity">
+        <div class="deco" style="background:radial-gradient(circle, rgba(52,214,201,0.35), transparent 70%);"></div>
+        <span class="tag">30 MIN · 共習課</span>
+        <h3>這就是<br>新紀元運動</h3>
+        <p>拆解三個長篇情境對話劇本，帶領學生進行角色扮演與屬靈分辨。</p>
+        <span class="go">開始共習課 →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECK: shared skeleton -->
+  <div class="deck" id="deckScreen">
+    <div class="deck-top">
+      <div class="deck-top-inner">
+        <button class="back-btn" id="homeBtn">← 回首頁</button>
+        <div class="timer-box">
+          <button class="timer-btn" id="timerReset" title="重設">↺</button>
+          <span class="timer-display mono" id="timerDisplay">50:00</span>
+          <button class="timer-btn" id="timerToggle" title="開始/暫停">▶</button>
+        </div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+    <div class="deck-body">
+      <div id="slideRoot"></div>
+    </div>
+    <div class="dots" id="dotsRow"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const field = document.getElementById('stars');
+  for(let i=0;i<140;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const size = (Math.random()*2 + 0.6).toFixed(2);
+    s.style.width = size+'px'; s.style.height = size+'px';
+    s.style.left = (Math.random()*100)+'%'; s.style.top = (Math.random()*100)+'%';
+    s.style.setProperty('--dur', (2.5 + Math.random()*4).toFixed(2)+'s');
+    s.style.setProperty('--op', (0.35 + Math.random()*0.65).toFixed(2));
+    s.style.animationDelay = (Math.random()*4).toFixed(2)+'s';
+    field.appendChild(s);
+  }
+})();
+
+const VERSE = (ref, zh) => ({ref, zh});
+
+const worshipSlides = [
+  {
+    tag:"引言破題", time:"3 分鐘",
+    title:"你身邊聽過這些世俗流行語嗎？",
+    mediaPlaceholder: "🖼️ 教員請切換分頁，展示張靖慧老師「正念：你活在當下嗎？」講座海報",
+    question:"同學們，如果學校輔導室張貼這張海報，邀請你去參加，你會去嗎？這話聽起來超溫柔、超正能量對不對？但裡面藏了什麼？",
+    hint:"請學生思考：這些話聽起來充滿正能量，背後隱藏著什麼思潮？",
+    reveal:{
+      heading:"講述要點：這正是末世精緻化的撒旦思潮",
+      paragraphs:[
+        "這些看似正面、勵志的句子，很多來自一個沒有固定教堂、沒有單一領袖，卻悄悄滲透心理學、流行音樂、校園社團與身心靈課程的思想——「新紀元運動」（New Age Movement）。",
+        "主打「潛能開發」、「正念舒壓」或「宇宙能量」。今天我們要靠著聖經真理，拆開這些包裝，謹守警醒。"
+      ]
+    }
+  },
+  {
+    tag:"起源與普及", time:"7 分鐘",
+    title:"「新紀元」這個詞是從何而來的？",
+    question:"「New Age／新紀元」這個詞是基督徒發明的，還是這個運動自身倡導的名詞？",
+    hint:"引導學生了解這個思潮如何標榜脫離基督教傳統制度。",
+    reveal:{
+      heading:"講述要點：名詞起源與文化滲透",
+      paragraphs:[
+        "「新紀元」一詞起源於 1960-1970 年代西方的西方神秘學與占星學。他們主張人類將脫離傳統基督教規範的雙魚座年代，進入自我覺醒、真善美的「寶瓶座年代（即新紀元）」。",
+        "雙魚座時代（約西元元年～2000年）：新紀元倡導者宣稱基督教帶給人類的是「罪惡感的束縛」，以及「必須透過教會或救主才能接觸神」的傳統模式。",
+        "寶瓶座時代（西元 2000 年以後）：主張人類現在不需要再講「罪與悔改」，而是進入每個人自己當神、靈性自由擴張的「新時代」。"
+      ],
+      bullets:[
+        "去中心化：沒有創辦人與總部，靠相同觀念串連普及",
+        "迎合人性：強調擺脫權威、開發潛能、自我實現",
+        "包裝多變：融入影視、心理學、身心靈課程與社團活動"
+      ]
+    }
+  },
+  {
+    tag:"核心毒素 ①", time:"8 分鐘",
+    title:"毒素一：泛神論——「人人皆是神」",
+    question:"如果有人說：「你本來就是神，只是你的神性尚未覺醒。」這句話犯了聖經中的什麼大忌？",
+    hint:"對照伊甸園中古蛇誘惑始祖的謊言（創世記三章）。",
+    reveal:{
+      heading:"以經解經：造物主與受造物的界線",
+      paragraphs:[
+        "新紀元主張萬物皆有神性，宇宙就是神，人也是神的一部分。既然人就是神，就不需要靠救世主，只要透過修練開啟神性即可。",
+        "在這套謬論中，救主耶穌被降格為「一位靈性較高、開發了神性的心靈導師」，這正是在否定耶穌是道成肉身、獨一真神的敵基督思想。"
+      ],
+      verse:VERSE("創世記 三章4-5節","蛇對女人說：『你們不一定死……你們便如神能知道善惡。』"),
+      split:{
+        lieTitle:"新紀元的泛神謊言",
+        lie:"你本身就是神，不需要依靠神或悔改，只要覺醒內在神性。",
+        truthTitle:"聖經的真理體系",
+        truth:"獨一真神創造萬物，人是神所造的受造物；尊神為大，不可驕傲自比為神。"
+      }
+    }
+  },
+  {
+    tag:"核心毒素 ②", time:"8 分鐘",
+    title:"毒素二：相對主義——「沒有絕對的罪」",
+    question:"如果世上沒有絕對的對錯與「罪」，福音的核心——寶血救恩會變成什麼？",
+    hint:"沒有罪的認知，就不需要耶穌十字架寶血的救贖。",
+    reveal:{
+      heading:"以經解經：罪的真實性與寶血救恩",
+      paragraphs:[
+        "新紀元運動否定原罪與審判，主張道德是相對的，只要順從內心感受。這種思想拿掉了福音的地基——若沒有罪，耶穌上十字架受死就失去了意義。",
+        "這也解釋了現代社會許多違背聖經道德規範的思潮（如多元成家、性解放），常套用新紀元「愛與包容、順從內心」的語言，把罪惡合理化。"
+      ],
+      verse:VERSE("羅馬書 三章23節 ／ 歌羅西書 二章8節","因為世人都犯了罪，虧缺了神的榮耀。／你們要謹慎，恐怕有人用他的理學和虛空的妄言，不照著基督，乃照人的遺業和世上的小學把你們抓去。")
+    }
+  },
+  {
+    tag:"核心毒素 ③", time:"8 分鐘",
+    title:"毒素三：變異意識——「尋求未知神秘體驗」",
+    mediaPlaceholder: "🎬 教員請切換分頁，播放 Netflix《以神之名：信仰的背叛》預告片（建議播放 0:30~1:15 處）",
+    question:"世俗的「放空冥想、接引宇宙能量、塔羅牌指引」，與基督徒在真教會的「禱告」有何本質上的不同？",
+    hint:"重點在於：人心是完全放空給邪靈留地步，還是受聖靈與真理管轄？",
+    reveal:{
+      heading:"以經解經：被聖靈充滿 vs. 靈界開口",
+      paragraphs:[
+        "世俗冥想要求「把頭腦完全清空、放空」，進入變異意識狀態。預告片中我們看到，當人尋求未知的能量與導師時，極易讓邪靈乘虛而入。",
+        "真教會信徒的禱告，是清醒地用悟性與靈禱（聖靈說方言）與神交通，心靈充滿神的話語，順服神的意志，絕非頭腦放空的玄想。"
+      ],
+      verse:VERSE("哥林多前書 十四章15節 ／ 申命記 十八章10-12節","我要用靈禱告，也要用悟性禱告；我要用靈歌唱，也要用悟性歌唱。／你們中間不可有人用占卜、觀兆、行邪術……凡行這些事的，都為耶和華所憎惡。")
+    }
+  },
+  {
+    tag:"防備之道", time:"8 分鐘",
+    title:"基督徒應當如何防備與因應？",
+    question:"面對末世精緻化的世俗思潮，聖經指示我們應當建立哪些屬靈防線？",
+    hint:"引用彼得前書與希伯來書的教導。",
+    reveal:{
+      heading:"以經解經：屬靈防備四大根基",
+      bullets:[
+        "① 謹守警醒（彼前五7-8）：不恐慌也不掉以輕心，清醒辨識世俗風潮",
+        "② 用堅固的信心抵擋（彼前五9）：即使世俗觀念被政策化或成為主流，仍持守真理",
+        "③ 熟練仁義的道理（來五12-14）：每日讀經、禱告、聚會，心竅習通，能明辨是非",
+        "④ 默想神的話語（詩篇一2）：用神的話充滿內心（Fill the mind），取代世俗的放空冥想（Empty the mind）"
+      ],
+      verse:VERSE("詩篇 一章2節","惟喜愛耶和華的律法，晝夜思想，這人便為有福！")
+    }
+  },
+  {
+    tag:"實戰應對", time:"備用",
+    title:"有關正念減壓課程",
+    question:"朋友：「我去上完學校輔導室正念減壓課，做完真的比較放鬆，難道輔導老師在害我們嗎？」",
+    hint:"請使用「屬靈辨識與替代型」心法來回應，而非一味盲目切割。",
+    reveal:{
+      heading:"界線劃分",
+      paragraphs:[
+        "深呼吸與放鬆肌肉本身是生理學現象，對減壓確實有幫助，輔導老師的出發點也是為了幫助大家。",
+        "但必須劃清屬靈界線：「危險點在於，當課程開始要求你『清空心思 (Empty the mind)』或『接引未知宇宙能量』時，這就是靈界的破口。」",
+        "提供基督徒的轉化方案：「我們可以練習腹式呼吸放鬆身體，但我們不放空大腦，而是『將神的話語充滿內心 (Fill the mind with God\'s Word)』，並向真神禱告求平安。」"
+      ]
+    }
+  },
+  {
+    tag:"崇拜聚會結語", time:"final",
+    title:"準備進入共習課：實戰角色扮演",
+    question:"",
+    hint:"",
+    reveal:null,
+    closing:true
+  }
+];
+
+const activitySlides = [
+  {
+    tag:"共習引言", time:"3 分鐘",
+    title:"這就是新紀元運動：雙人角色扮演 (Role-Play)",
+    question:"老師挑選一位學生上台，老師擔任非基督徒的角色，學生擔任基督徒的角色，對話結束後，我們一起擔任「屬靈偵探」，找出對白中隱藏的新紀元毒素！",
+    hint:"請教員準備點名，鼓勵學生用語氣演出來，增加趣味性。",
+    reveal:{
+      heading:"討論指引",
+      bullets:[
+        "仔細聽對白中的關鍵字（如：宇宙、能量、沒有罪、放空）",
+        "指出對白中涉及新紀元運動的哪項毒素",
+        "思考聖經真理會如何反駁"
+      ]
+    }
+  },
+  {
+    tag:"對話劇本 1", time:"8 分鐘",
+    title:"破解泛神論：「人人皆是神 / 吸引力法則」",
+    question:"請兩位同學上台朗讀以下對白：",
+    dialogues: [
+      {role: "b", name: "阿泰 (同學)", text: "小明，我看你最近為了段考整天愁眉苦臉的，禱告真的有效嗎？要不要試試看我最近在學的『吸引力法則』？"},
+      {role: "a", name: "小明 (信徒)", text: "吸引力法則？那不是什麼心靈雞湯嗎？我這幾天一直禱告求神賜給我平靜，但還是很緊張啊……"},
+      {role: "b", name: "阿泰 (同學)", text: "你求神當然沒用啊！因為你一直在跟外在的神『祈求』，這代表你覺得自己很軟弱！《秘密》這本書說，你本身就是神，你就是自己命運的創造者！你根本不需要求神，只要你每天睡前強烈觀想考上第一志願的畫面，跟宇宙下訂單，宇宙能量就會被你吸引過來！"},
+      {role: "a", name: "小明 (信徒)", text: "跟宇宙下訂單？我自己就是神？但聖經說只有耶穌是獨一真神啊？"},
+      {role: "b", name: "阿泰 (同學)", text: "哎呀，所有宗教其實都一樣啦，耶穌也是一個磁場很強的覺醒導師而已啊！想考幾分你自己創造就好啦！"},
+      {role: "a", name: "小明 (信徒)", text: "讓我想想..."}
+    ],
+    hint:"全班討論：阿泰的論點哪裡否定了造物主的主權？",
+    reveal:{
+      heading:"教員引導要點",
+      paragraphs:[
+        "阿泰的話語充滿了「泛神論（你本身就是神）」與「降格救主耶穌」的毒素。",
+        "吸引力法則無限高估人的意念，暗示人可以用意志創造現實，這是在扮演神的角色。",
+        "基督徒明白結果的主權在於神，應當禱告求神旨意成就，而非憑人的意念強求或自比為神。"
+      ]
+    }
+  },
+  {
+    tag:"對話劇本 2", time:"8 分鐘",
+    title:"破解相對主義：「沒有絕對的罪」",
+    question:"請兩位同學上台朗讀以下對白：",
+    dialogues: [
+      {role: "b", name: "萱萱 (感性閨蜜)", text: "小雪，你幹嘛因為跟男朋友吵架、還有沒去聚會在那裡自責啊？你又沒有做錯什麼！"},
+      {role: "a", name: "小雪 (掙扎信徒)", text: "可是……聖經說我們要謹守聖潔，而且我脾氣不好爆發出來，覺得自己犯了罪，虧缺了神的榮耀，這幾天禱告都覺得很愧疚……"},
+      {role: "b", name: "萱萱 (感性閨蜜)", text: "小雪，你真的被你們教會的教條情緒勒索太深了啦！新時代的思想告訴我們：這世界上根本沒有絕對的『罪』，也沒有絕對的對與錯！那都是傳統宗教拿來控制人心的手段。"},
+      {role: "a", name: "小雪 (掙扎信徒)", text: "沒有罪？可是如果沒有對錯，那我們怎麼知道什麼該做、什麼不該做？"},
+      {role: "b", name: "萱萱 (感性閨蜜)", text: "順從你的內心啊！宇宙的本質就是『愛與包容』。只要你覺得開心、沒有傷害別人，那就是屬於你的真理。不用去悔改，也不用求什麼寶血救贖，你只要擁抱自己的情緒、愛你自己就好了啊！"},
+      {role: "a", name: "小雪 (掙扎信徒)", text: "讓我想想..."}
+    ],
+    hint:"全班討論：沒有了「罪」的概念，福音的核心會受到什麼衝擊？",
+    reveal:{
+      heading:"教員引導要點",
+      paragraphs:[
+        "萱萱的話語充滿了「相對主義（沒有絕對的罪）」與「廢棄寶血救恩」的毒素。",
+        "將道德與罪惡相對化，用「愛與包容」包裝，是為了讓人逃避神聖潔的標準。",
+        "若沒有罪，人就不需要救贖；唯有正視罪的真實性，我們才能真正體會救主耶穌十字架寶血的珍貴。"
+      ]
+    }
+  },
+  {
+    tag:"對話劇本 3", time:"8 分鐘",
+    title:"破解變異意識：「靈界破口與正念冥想」",
+    mediaPlaceholder: "🖼️ 教員可視情況，再次切換分頁展示「正念講座海報」幫助學生帶入情境",
+    question:"請兩位同學上台朗讀以下對白：",
+    dialogues: [
+      {role: "a", name: "小草 (興奮同學)", text: "家豪！你看這張正念講座海報！我今天去參加學校輔導室辦的正念體驗，超放鬆的耶！"},
+      {role: "b", name: "家豪 (警覺青少年)", text: "正念講座？這海報寫著『透過正念與自我疼惜，訓練大腦』……老師在課堂上教你們做什麼？"},
+      {role: "a", name: "小草 (興奮同學)", text: "老師教我們把頭腦完全放空、清空所有念頭，進入一種無思想的冥想狀態，去接引宇宙的高頻能量！結束後老師還讓我抽了一張『守護天使指引卡』，卡片說有一股光正在保護我耶！這比你們在教會跪著禱告輕鬆多了吧？"},
+      {role: "b", name: "家豪 (警覺青少年)", text: "小草，你先冷靜聽我說……聽起來很舒服，但把頭腦『完全清空、放空』，還隨機抽卡片尋求不知名靈體的指引，這在屬靈上非常危險！"},
+      {role: "a", name: "小草 (興奮同學)", text: "哪有什麼危險？學校輔導室開的課耶！而且流行歌也不常唱向『夜空中最亮的星』祈求嗎？能讓我放鬆減壓不就好了，管他能量是從哪裡來的？"},
+      {role: "b", name: "家豪 (警覺青少年)", text: "我想一下，『禱告』跟『放空冥想』到底哪裡不一樣？"}
+    ],
+    hint:"全班討論：放空大腦與聖靈充滿的差異在哪裡？向星星祈求有何問題？",
+    reveal:{
+      heading:"教員引導要點",
+      paragraphs:[
+        "小草的行為涉及了「變異意識（放空冥想給邪靈留地步）」、「占卜（天使卡）」與「敬拜受造之物（向星星祈求）」。",
+        "真教會的禱告是清醒地向獨一真神呼求，在聖靈感化中順服主旨（悟性與靈禱），絕不是把大腦放空給未知的靈界。",
+        "任何試圖繞過神，尋求宇宙能量或守護天使指引的行為，都落入了撒旦的網羅中。"
+      ]
+    }
+  },
+  {
+    tag:"對話劇本 4", time:"8 分鐘",
+    title:"破解星座迷思：「星星能決定我的個性與命運嗎？」",
+    question:"請兩位同學上台朗讀以下對白：",
+    dialogues: [
+      {role: "b", name: "同學 A", text: "小彤，你這週末要不要跟我去逛街？啊對了，你是處女座對吧？難怪你做事那麼龜毛、有潔癖，難相處！"},
+      {role: "a", name: "信徒 B", text: "呃……我只是比較要求細節而已，這跟星座有什麼關係？而且我的個性怎麼會是由出生那天天空的星星決定的？"},
+      {role: "b", name: "同學 A", text: "這當然有關係啊！宇宙星體的磁場本來就會深刻影響人的運勢跟潛意識，這可是結合了大數據跟神祕學的智慧。你們基督徒整天說神掌管一切，但命運明明就掌握在星象跟自己的選擇裡，幹嘛什麼事都要求神拜佛？"},
+      {role: "a", name: "信徒 B", text: "可是，聖經不是說我們的日子和氣質都是神所造的、在祂手中嗎？如果一切都是星星決定的，那人還要為自己的行為負責嗎？"},
+      {role: "b", name: "同學 A", text: "哎呀，這只是一種輕鬆的心理投射跟運勢參考啦！水星逆行的時候大家都很倒楣，難道你要說那是神故意整大家嗎？看星座至少比盲目信奉一個看不到的神實際多了吧！"},
+      {role: "a", name: "信徒 B", text: "讓我想想……"}
+    ],
+    hint:"全班討論：依賴星座運勢與將命運交給神，本質上有什麼不同？把受造的星體當成命運主宰有何問題？",
+    reveal:{
+      heading:"教員引導要點",
+      paragraphs:[
+        "人的性格與氣質是神所造的各不相同，而命運更是掌握在造物主手中，絕非由盲目的星象與出生日期決定。",
+        "將星座當作絕對標準或用來合理化軟弱、窺探未來，本質上就是落入「占卜與宿命論」的網羅，把榮耀與主權從神身上奪走，轉向敬拜受造之物。"
+      ]
+    }
+  },
+  {
+    tag:"對話劇本 5", time:"8 分鐘",
+    title:"破解 MBTI 迷思：「人格測驗能定義我是誰嗎？」",
+    question:"請兩位同學上台朗讀以下對白：",
+    dialogues: [
+      {role: "a", name: "信徒 A", text: "唉，老師這學期希望我擔任班上的契代（團契代表）或是帶領活動，但我真的好內向、好害怕站在大家面前說話……"},
+      {role: "b", name: "同學/學長 B", text: "哎呀，你測出來不是典型的『I人（內向人格）』嗎？這種類型本來就極度社恐、缺乏領導力、不擅長跟人群互動，這就是你天生的出廠設定啦！"},
+      {role: "a", name: "信徒 A", text: "可是，主耶穌不是常常呼召我們去為主發光、甚至在眾人面前為主作見證嗎？如果我的生命跟潛能被 MBTI 永遠定型了，那我還能被神使用嗎？"},
+      {role: "b", name: "同學/學長 B", text: "別傻了，心理學測驗比宗教勸勉科學多了！基因跟心理模組早就把你的極限寫死了，你硬要去社交只是在消耗能量、折磨自己而已。"},
+      {role: "a", name: "信徒 A", text: "話是這樣說沒錯，但如果聖經說在神凡事都能，難道我的個性就完全不能被聖靈改變或擴張嗎？"},
+      {role: "b", name: "同學/學長 B", text: "接受自己的極限、躺平當個快樂的 I 人不好嗎？幹嘛非得逼自己去迎合教會的期待？"},
+      {role: "a", name: "信徒 A", text: "讓我想想……"}
+    ],
+    hint:"全班討論：心理測驗是了解自己的工具還是「自我設限」的藉口？在神裡面，我們的性格有沒有被改變或突破的可能？",
+    reveal:{
+      heading:"教員引導要點",
+      paragraphs:[
+        "MBTI 或各種心理測驗可以幫助我們了解自己的行為模式與優缺點，但絕不能把它當作「逃避成長」或「定罪他人（例如：因為他是 XX 人格所以沒救了）」的絕對真理。",
+        "在基督裡，我們是「新造的人」，聖靈有無限的恩典與大能可以更新我們的軟弱、擴張我們的境界。神看重的不是我們天生是 E 還是 I，而是我們是否願意為主獻上自己、順服祂的呼召。"
+      ]
+    }
+  },
+  {
+    tag:"對話劇本 6", time:"8 分鐘",
+    title:"破解性別解構迷思：「順從心靈渴望就是真理嗎？」",
+    question:"請兩位同學上台朗讀以下對白：",
+    dialogues: [
+      {role: "a", name: "掙扎信徒 A", text: "最近學校在推動多元性別教案，教導大家『性別是流動的』、『愛不分性別與生理構造』，甚至說想當男生或女生都可以隨心所欲地轉換。我聽了覺得好混亂，聖經不是說神起初造男造女嗎？"},
+      {role: "b", name: "前衛同學 B", text: "哎喲，你怎麼還這麼古板！新時代的思潮早就告訴我們：身體只是暫時的軀殼，心靈的渴望跟愛才是最真實的。只要你覺得舒服、沒有刻意去傷害別人，『愛最大』就是最高真理！"},
+      {role: "a", name: "掙扎信徒 A", text: "可是……如果連性別和婚姻的定義都可以隨心所欲地被解構，那我們要怎麼按照神的心意來生活？傳統基督教一男一女的標準真的就完全不能改嗎？"},
+      {role: "b", name: "前衛同學 B", text: "對啊！傳統基督教那一套男女有別的框架，早就過時了，這根本是在用道德情緒勒索人！每個人都有權利定義自己的認同跟慾望，盲目遵守老掉牙的教條幹嘛？"},
+      {role: "a", name: "掙扎信徒 A", text: "如果我堅持聖經的標準，會不會就被全班當成是沒同理心、歧視別人的人？但我又不想違背真理……"},
+      {role: "b", name: "前衛同學 B", text: "擁抱自己的慾望、活出自我不好嗎？幹嘛讓古代的經文綁架你的自由？"},
+      {role: "a", name: "掙扎信徒 A", text: "讓我想想……"}
+    ],
+    hint:"全班討論：當世俗思潮把「個人慾望與心靈渴望」捧上神壇時，基督徒該如何看待創造的秩序與真理？我們如何在堅持真理的同時，活出主的愛與溫暖？",
+    reveal:{
+      heading:"教員引導要點",
+      paragraphs:[
+        "後現代與新紀元思潮常強調「自我主權最大化（我的身體我作主、我的慾望就是真理）」，試圖抹滅神所設立的起初秩序（一男一女、婚姻的聖潔）。",
+        "基督徒在面對這個議題時，需要有雙重的智慧：一方面在真理上站穩腳步，認定神創造的美意與道德標準不容妥協；另一方面以溫柔、體恤的基督之愛去關懷身邊在情感與認同中掙扎的人，而不是用高傲定罪的態度對待他們，但絕不將世俗的價值觀奉為真理。"
+      ]
+    }
+  },
+  {
+    tag:"共習總結", time:"3 分鐘",
+    title:"教員總結與聖經勉勵",
+    question:"",
+    hint:"",
+    reveal:{
+      heading:"教員總結勉勵",
+      paragraphs:[
+        "末後日子魔鬼的工作極其細微，漸漸滲透到生活各角落，讓人懷疑神的話。我們務要多禱告、讀經，靠著聖靈明白真理，做明辨是非的基督徒。"
+      ]
+    },
+    prayer:"【聖經經文總結】\n「你們要謹慎，恐怕有人用他的理學和虛空的妄言，不照著基督，乃照人的遺業和世上的小學把你們抓去。」（歌羅西書 二章8節）\n\n「親愛的弟兄啊，一切的靈，你們不可都信，總要試驗那些靈是出於神的不是。」（約翰一書 四章1節）\n\n（聚會結束，請教員帶領全體學員同心跪下禱告，祈求聖靈賜予明白真理的智慧與屬靈的分辨力。）",
+    closing:true
+  }
+];
+
+let currentDeck = null;
+let currentIndex = 0;
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+
+const decks = { worship: {data:worshipSlides, totalTime: 50*60}, activity:{data:activitySlides, totalTime:30*60} };
+
+function openDeck(name){
+  currentDeck = name;
+  currentIndex = 0;
+  timerSeconds = decks[name].totalTime;
+  timerRunning = false;
+  updateTimerDisplay();
+  document.getElementById('homeScreen').style.display = 'none';
+  document.getElementById('deckScreen').classList.add('active');
+  renderDots();
+  renderSlide();
+}
+
+function closeDeck(){
+  clearInterval(timerInterval);
+  timerRunning = false;
+  document.getElementById('timerToggle').textContent = '▶';
+  document.getElementById('deckScreen').classList.remove('active');
+  document.getElementById('homeScreen').style.display = 'flex';
+  document.getElementById('lampBurst').classList.remove('on');
+}
+
+function renderDots(){
+  const row = document.getElementById('dotsRow');
+  row.innerHTML = '';
+  decks[currentDeck].data.forEach((s,i)=>{
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===currentIndex ? ' active' : (i<currentIndex ? ' done':''));
+    d.addEventListener('click', ()=>{ currentIndex = i; renderSlide(); });
+    row.appendChild(d);
+  });
+}
+
+function verseHtml(v){
+  if(!v) return '';
+  return `<div class="verse-chip"><b>${v.ref}</b>${v.zh}</div>`;
+}
+
+function splitHtml(sp){
+  if(!sp) return '';
+  return `<div class="split">
+    <div class="col lie"><h5>${sp.lieTitle}</h5><p>${sp.lie}</p></div>
+    <div class="col truth"><h5>${sp.truthTitle}</h5><p>${sp.truth}</p></div>
+  </div>`;
+}
+
+function renderSlide(){
+  const list = decks[currentDeck].data;
+  const s = list[currentIndex];
+  const root = document.getElementById('slideRoot');
+  document.getElementById('lampBurst').classList.remove('on');
+
+  let bodyHtml = '';
+
+  if(s.closing){
+    bodyHtml += `<div class="slide">
+      <div class="slide-meta"><span class="chip section">${s.tag}</span><span class="chip time">${s.time}</span></div>
+      <h2>${s.title}</h2>`;
+    if(s.reveal){
+      bodyHtml += `<div class="reveal-panel shown"><h4>${s.reveal.heading}</h4>`;
+      (s.reveal.paragraphs||[]).forEach(p=> bodyHtml += `<p>${p}</p>`);
+      bodyHtml += `</div>`;
+    }
+    if(s.prayer){
+      bodyHtml += `<div class="pray-box"><p style="white-space:pre-line;">${s.prayer}</p></div>`;
+    }
+    if(currentDeck==='worship' && !s.prayer){
+      bodyHtml += `<div class="pray-box"><p>50 分鐘崇拜聚會順利完成。請點擊上方「回首頁」，選擇「30 分鐘 · 共習課」進入分組討論與對話扮演。</p></div>`;
+    }
+    bodyHtml += `</div>`;
+  } else {
+    bodyHtml += `<div class="slide">
+      <div class="slide-meta"><span class="chip section">${s.tag}</span><span class="chip time">建議 ${s.time}</span></div>
+      <h2>${s.title}</h2>`;
+
+    if(s.mediaPlaceholder){
+      bodyHtml += `<div class="media-placeholder">${s.mediaPlaceholder}</div>`;
+    }
+
+    if(s.dialogues){
+      bodyHtml += `<div class="grill-box" style="padding-bottom:10px;">
+        <div class="grill-label">🎭 劇本對白朗讀區</div>
+        <div class="dialogue-box">`;
+      s.dialogues.forEach(d => {
+        bodyHtml += `<div class="msg role-${d.role}"><div class="msg-name">${d.name}</div><div class="role-text">${d.text}</div></div>`;
+      });
+      bodyHtml += `</div>
+        <div class="grill-hint">💡 屬靈提示：${s.hint}</div>
+      </div>`;
+    } else {
+      bodyHtml += `<div class="grill-box">
+        <div class="grill-label">思考與引導質詢</div>
+        <div class="grill-q">${s.question}</div>
+        ${s.hint? `<div class="grill-hint">💡 屬靈提示：${s.hint}</div>` : ''}
+      </div>`;
+    }
+
+    bodyHtml += `<button class="reveal-btn" id="revealBtn">揭曉帶領要點與真理對照 ✦</button>`;
+
+    bodyHtml += `<div class="reveal-panel" id="revealPanel">
+      <h4>${s.reveal.heading}</h4>`;
+    (s.reveal.paragraphs||[]).forEach(p=> bodyHtml += `<p>${p}</p>`);
+    if(s.reveal.bullets){
+      bodyHtml += `<ul>` + s.reveal.bullets.map(b=>`<li>${b}</li>`).join('') + `</ul>`;
+    }
+    bodyHtml += verseHtml(s.reveal.verse);
+    bodyHtml += splitHtml(s.reveal.split);
+    bodyHtml += `</div>`;
+    bodyHtml += `</div>`;
+  }
+
+  bodyHtml += `<div class="nav-row">
+    <button class="nav-btn" id="prevBtn" ${currentIndex===0?'disabled':''}>← 上一頁</button>
+    <button class="nav-btn primary" id="nextBtn">${currentIndex===list.length-1? '完成課程 ✓' : '下一頁 →'}</button>
+  </div>`;
+
+  root.innerHTML = bodyHtml;
+
+  const revealBtn = document.getElementById('revealBtn');
+  if(revealBtn){
+    revealBtn.addEventListener('click', ()=>{
+      document.getElementById('revealPanel').classList.add('shown');
+      document.getElementById('lampBurst').classList.add('on');
+      revealBtn.style.display='none';
+    });
+  }
+  document.getElementById('prevBtn').addEventListener('click', ()=>{
+    if(currentIndex>0){ currentIndex--; renderSlide(); renderDots(); updateProgress(); }
+  });
+  document.getElementById('nextBtn').addEventListener('click', ()=>{
+    if(currentIndex < list.length-1){ currentIndex++; renderSlide(); renderDots(); updateProgress(); }
+    else { closeDeck(); }
+  });
+
+  updateProgress();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function updateProgress(){
+  const list = decks[currentDeck].data;
+  const pct = (currentIndex/(list.length-1))*100;
+  document.getElementById('progressFill').style.width = pct+'%';
+}
+
+function updateTimerDisplay(){
+  const m = Math.floor(Math.max(timerSeconds,0)/60).toString().padStart(2,'0');
+  const sec = Math.max(timerSeconds,0)%60;
+  const s = sec.toString().padStart(2,'0');
+  document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+}
+
+document.getElementById('timerToggle').addEventListener('click', ()=>{
+  timerRunning = !timerRunning;
+  document.getElementById('timerToggle').textContent = timerRunning? '❚❚' : '▶';
+  if(timerRunning){
+    timerInterval = setInterval(()=>{
+      timerSeconds--;
+      if(timerSeconds<=0){ timerSeconds=0; clearInterval(timerInterval); timerRunning=false; document.getElementById('timerToggle').textContent='▶'; }
+      updateTimerDisplay();
+    },1000);
+  } else {
+    clearInterval(timerInterval);
+  }
+});
+document.getElementById('timerReset').addEventListener('click', ()=>{
+  clearInterval(timerInterval); timerRunning=false;
+  document.getElementById('timerToggle').textContent='▶';
+  timerSeconds = decks[currentDeck]? decks[currentDeck].totalTime : 50*60;
+  updateTimerDisplay();
+});
+
+document.querySelectorAll('.mode-card').forEach(card=>{
+  card.addEventListener('click', ()=> openDeck(card.dataset.deck));
+});
+document.getElementById('homeBtn').addEventListener('click', closeDeck);
+
+document.addEventListener('keydown', (e)=>{
+  if(!document.getElementById('deckScreen').classList.contains('active')) return;
+  if(e.key==='ArrowRight'){ document.getElementById('nextBtn')?.click(); }
+  if(e.key==='ArrowLeft'){ document.getElementById('prevBtn')?.click(); }
+});
+</script>
+</body>
+</html>
